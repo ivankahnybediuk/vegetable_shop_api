@@ -1,0 +1,48 @@
+# Build results
+bin/
+obj/
+
+# Rider
+.idea/
+
+# User-specific files
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Logs
+*.log
+
+# NuGet
+*.nupkg
+packages/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Environment files
+.env
+.env.*
+
+# ASP.NET secrets
+secrets.json
+
+# Publish output
+publish/
+
+# Test results
+TestResults/
+
+# Coverage
+coverage/
+*.coverage
+
+# Generated files
+Generated/
+
+# Database files (якщо випадково будуть локальні)
+*.db
+*.sqlite
+*.sqlite3
