@@ -1,3 +1,5 @@
+using VegetableShopApi.Enums;
+
 namespace VegetableShopApi.Models;
 
 public class OrderItem
@@ -10,4 +12,5 @@ public class OrderItem
    public decimal Quantity {get; set;}
    public decimal UnitPrice {get; set;}
    public decimal TotalPrice {get; set;}
+   public UnitType Unit {get; set;}
 }
