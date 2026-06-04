@@ -18,6 +18,7 @@ public class AppDbContext : DbContext
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.HasDefaultSchema("shop");
         modelBuilder.Entity<Category>(entity =>
         {
             entity.ToTable("categories");

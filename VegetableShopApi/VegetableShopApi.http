@@ -1,6 +1,6 @@
 @VegetableShopApi_HostAddress = http://localhost:5006
 
-GET {{VegetableShopApi_HostAddress}}/weatherforecast/
+GET {{VegetableShopApi_HostAddress}}/api/Products?page=2&pageSize=3
 Accept: application/json
 
 ###

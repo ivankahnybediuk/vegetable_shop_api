@@ -1,6 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using VegetableShopApi.Data;
 using VegetableShopApi.Enums;
+using VegetableShopApi.Services;
+using VegetableShopApi.Services.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,12 +17,15 @@ builder.Services.AddDbContext<AppDbContext>( options =>
             o.MapEnum<OrderStatus>("order_status");
             o.MapEnum<UserRole>("role");
         }));
+builder.Services.AddControllers();
+builder.Services.AddScoped<IProductService, ProductService>();
 
 
 var app = builder.Build();
+
 app.UseSwagger();
 app.UseSwaggerUI();
-
+app.MapControllers();
 
 app.UseHttpsRedirection();
 
