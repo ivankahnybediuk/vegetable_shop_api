@@ -9,3 +9,6 @@ GET {{VegetableShopApi_HostAddress}}/api/products/category/2?page=1&pageSize=3
 Accept: application/json
 
 ###
+
+GET {{VegetableShopApi_HostAddress}}/api/categories
+Accept: application/json

@@ -10,7 +10,7 @@ public class ProductServiceTests
     [Fact]
     public async Task GetAllPagedAsync_ReturnsAllProducts()
     {
-        var context = TestDbContextFactory.Create();
+        await using var context = TestDbContextFactory.Create();
         var category = new Category
         {
             Id = 1,
@@ -50,7 +50,7 @@ public class ProductServiceTests
     [Fact]
     public async Task GetAllPagedAsync_ReturnsEmptyListIfNoProducts()
     {
-        var context = TestDbContextFactory.Create();
+        await using var context = TestDbContextFactory.Create();
         var service = new ProductService(context);
         var result = await service.GetAllPaginatedAsync(1, 10);
         Assert.NotNull(result);
@@ -62,7 +62,7 @@ public class ProductServiceTests
     [Fact]
     public async Task GetByCategoryIdAsync_ReturnsProductList()
     {
-        var context = TestDbContextFactory.Create();
+        await using var context = TestDbContextFactory.Create();
         var categories = new List<Category>()
         {
             new Category
@@ -107,7 +107,7 @@ public class ProductServiceTests
     [Fact]
     public async Task GetByCategoryIdAsync_ReturnsEmptyListIfNoProducts()
     {
-        var context = TestDbContextFactory.Create();
+        await using var context = TestDbContextFactory.Create();
         var category = new Category(){Id = 1, Name = "Vegetables"};
         context.Categories.Add(category);
         await context.SaveChangesAsync();
@@ -123,7 +123,7 @@ public class ProductServiceTests
     [Fact]
     public async Task GetByCategoryIdAsync_ReturnsExceptionIfCategoryNotExists()
     {
-        var context = TestDbContextFactory.Create();
+        await using var context = TestDbContextFactory.Create();
         
         var service = new ProductService(context);
         await Assert.ThrowsAsync<KeyNotFoundException>(() => service.GetByCategoryIdAsync(1, 1, 2));

@@ -1,3 +1,4 @@
+using DefaultNamespace;
 using Microsoft.EntityFrameworkCore;
 using VegetableShopApi.Data;
 using VegetableShopApi.Enums;
@@ -19,6 +20,7 @@ builder.Services.AddDbContext<AppDbContext>( options =>
         }));
 builder.Services.AddControllers();
 builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<ICategoryService, CategoryService>();
 
 
 var app = builder.Build();
