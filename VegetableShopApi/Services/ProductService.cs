@@ -21,4 +21,15 @@ public class ProductService : IProductService
         return new PagedResult<ProductDto>(products.Select(p => new ProductDto(p))
             .ToList(), page, pageSize, totalCount);
     }
+
+    public async Task<PagedResult<ProductDto>> GetByCategoryIdAsync(int categoryId, int page, int pageSize)
+    {
+        var categoryExists = await _dbContext.Categories.AnyAsync(c => c.Id == categoryId);
+        if (!categoryExists) throw new KeyNotFoundException($"The category with id {categoryId} does not exist.");
+        
+        int totalCount = await _dbContext.Products.Where(p => p.CategoryId == categoryId).CountAsync();
+        var products = await _dbContext.Products.Where(p=> p.CategoryId == categoryId).Skip(pageSize * (page - 1))
+            .Take(pageSize).Include(p => p.Category).ToListAsync();
+        return new PagedResult<ProductDto>(products.Select(p => new ProductDto(p)).ToList(), page, pageSize, totalCount);
+    }
 }
