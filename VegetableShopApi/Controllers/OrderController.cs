@@ -10,10 +10,16 @@ namespace VegetableShopApi.Controllers;
 public class OrderController : ControllerBase
 {
     private IOrderService _orderService;
+    private ILogger<OrderController>? _logger;
 
     public OrderController(IOrderService orderService)
     {
         _orderService = orderService;
+    }
+    public OrderController(IOrderService orderService, ILogger<OrderController> logger)
+    {
+        _orderService = orderService;
+        _logger = logger;
     }
     
     [HttpPost]
@@ -38,6 +44,7 @@ public class OrderController : ControllerBase
         }
         catch (Exception ex)
         {
+            _logger?.LogError(ex, "Error creating order");
             return StatusCode(500, ex.Message);
         }
     }

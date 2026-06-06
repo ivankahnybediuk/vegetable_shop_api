@@ -7,11 +7,17 @@ namespace VegetableShopApi.Controllers;
 [Route("api/categories")]
 public class CategoryController : ControllerBase
 {
-    ICategoryService _categoryService;
+    private ICategoryService _categoryService;
+    private ILogger<CategoryController>? _logger;
 
     public CategoryController(ICategoryService categoryService)
     {
         _categoryService = categoryService;
+    }
+    public CategoryController(ICategoryService categoryService, ILogger<CategoryController> logger)
+    {
+        _categoryService = categoryService;
+        _logger = logger;
     }
 
     [HttpGet]
@@ -24,6 +30,7 @@ public class CategoryController : ControllerBase
         }
         catch (Exception ex)
         {
+            _logger?.LogError(ex, "Error getting categories");
             return StatusCode(500, ex.Message);
         }
     }

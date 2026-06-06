@@ -8,10 +8,16 @@ namespace VegetableShopApi.Controllers;
 public class ProductsController : ControllerBase
 {
     private IProductService _productService;
+    private ILogger<ProductsController>? _logger;
 
     public ProductsController(IProductService productService)
     {
         _productService = productService;
+    }
+    public ProductsController(IProductService productService, ILogger<ProductsController> logger)
+    {
+        _productService = productService;
+        _logger = logger;
     }
 
     [HttpGet]
@@ -27,6 +33,7 @@ public class ProductsController : ControllerBase
         }
         catch (Exception ex)
         {
+            _logger?.LogError(ex, "Error getting products");
             return StatusCode(500, ex.Message);
         }
     }
@@ -49,6 +56,7 @@ public class ProductsController : ControllerBase
         }
         catch (Exception ex)
         {
+            _logger?.LogError(ex, "Error getting products by category");
             return StatusCode(500, ex.Message);
         }
     }
@@ -70,6 +78,7 @@ public class ProductsController : ControllerBase
         }
         catch (Exception ex)
         {
+            _logger?.LogError(ex, "Error getting products by name");
             return StatusCode(500, ex.Message);
         }
     }
