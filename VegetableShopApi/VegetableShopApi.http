@@ -1,3 +1,28 @@
+
+POST {{VegetableShopApi_HostAddress}}/api/orders
+Content-Type: application/json
+
+{
+  "name": "John",
+  "lastname": "Doe",
+  "email": "email",
+  "phone": "123456789",
+  "address": "123 Main St",
+  "items": [
+    {
+      "productId": 2,
+      "quantity": 1.0
+    },
+    {
+      "productId": 3,
+      "quantity": 2.0
+    }
+  ]
+}
+
+
+
+###
 @VegetableShopApi_HostAddress = http://localhost:5006
 
 GET {{VegetableShopApi_HostAddress}}/api/products?page=2&pageSize=3

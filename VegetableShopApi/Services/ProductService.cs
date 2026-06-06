@@ -9,12 +9,13 @@ namespace VegetableShopApi.Services;
 
 public class ProductService : IProductService
 {
-    private AppDbContext _dbContext;
+    private readonly AppDbContext _dbContext;
 
     public ProductService(AppDbContext dbContext)
     {
         _dbContext = dbContext;
     }
+    
     public async Task<PagedResult<ProductDto>> GetAllPaginatedAsync(int page, int pageSize)
     {
         int totalCount = await _dbContext.Products.CountAsync();

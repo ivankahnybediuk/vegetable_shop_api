@@ -6,7 +6,7 @@ namespace VegetableShopApi.Services;
 
 public class CategoryService : ICategoryService
 {
-    private AppDbContext _dbContext;
+    private readonly AppDbContext _dbContext;
 
     public CategoryService(AppDbContext dbContext)
     {
