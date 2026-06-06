@@ -52,5 +52,26 @@ public class ProductsController : ControllerBase
             return StatusCode(500, ex.Message);
         }
     }
+
+    [HttpGet("search")]
+    public async Task<IActionResult> GetProductsByName(
+        [FromQuery] string name,
+        [FromQuery] int page = 1,
+        [FromQuery] int pageSize = 9)
+    {
+        try
+        {
+            if (page < 1 || pageSize < 1) return BadRequest("Page and PageSize must be greater than 0");
+            if (string.IsNullOrEmpty(name)) return BadRequest("Name is required");
+            if (name.Length < 3) return BadRequest("Name must be at least 3 characters long");
+            
+            var products = await _productService.GetByNameAsync(name, page, pageSize);
+            return Ok(products);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, ex.Message);
+        }
+    }
     
 }

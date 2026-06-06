@@ -1,6 +1,8 @@
+using System.Text.RegularExpressions;
 using Microsoft.EntityFrameworkCore;
 using VegetableShopApi.Data;
 using VegetableShopApi.DTOs.ProductDto;
+using VegetableShopApi.Models;
 using VegetableShopApi.Services.Interfaces;
 
 namespace VegetableShopApi.Services;
@@ -17,7 +19,11 @@ public class ProductService : IProductService
     {
         int totalCount = await _dbContext.Products.CountAsync();
         var products = await this._dbContext.Products
-            .Skip(pageSize * (page - 1)).Take(pageSize).Include(p => p.Category).ToListAsync();
+            .OrderBy(p => p.Id)
+            .Skip(pageSize * (page - 1))
+            .Take(pageSize)
+            .Include(p => p.Category)
+            .ToListAsync();
         return new PagedResult<ProductDto>(products.Select(p => new ProductDto(p))
             .ToList(), page, pageSize, totalCount);
     }
@@ -28,8 +34,27 @@ public class ProductService : IProductService
         if (!categoryExists) throw new KeyNotFoundException($"The category with id {categoryId} does not exist.");
         
         int totalCount = await _dbContext.Products.Where(p => p.CategoryId == categoryId).CountAsync();
-        var products = await _dbContext.Products.Where(p=> p.CategoryId == categoryId).Skip(pageSize * (page - 1))
-            .Take(pageSize).Include(p => p.Category).ToListAsync();
+        var products = await _dbContext.Products
+            .Where(p=> p.CategoryId == categoryId)
+            .OrderBy(p => p.Id)
+            .Skip(pageSize * (page - 1))
+            .Take(pageSize)
+            .Include(p => p.Category)
+            .ToListAsync();
+        return new PagedResult<ProductDto>(products.Select(p => new ProductDto(p)).ToList(), page, pageSize, totalCount);
+    }
+
+    public async Task<PagedResult<ProductDto>> GetByNameAsync(string name, int page, int pageSize)
+    {
+        var searchTerm = name.Trim().ToLower();
+        var pattern = $@"(^|\s){Regex.Escape(searchTerm)}";
+        var query = _dbContext.Products
+            .Include(p => p.Category)
+            .Where(p => Regex.IsMatch(p.Name.ToLower(), pattern));
+        
+        int totalCount = await query.CountAsync();
+        var products = await query.OrderBy(p => p.Id).Skip(pageSize * (page - 1))
+            .Take(pageSize).ToListAsync();
         return new PagedResult<ProductDto>(products.Select(p => new ProductDto(p)).ToList(), page, pageSize, totalCount);
     }
 }
