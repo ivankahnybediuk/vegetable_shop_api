@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using VegetableShopApi.Data;
 using VegetableShopApi.DTOs.OrderDto;
 using VegetableShopApi.DTOs.OrderItemDto;
+using VegetableShopApi.DTOs.ProductDto;
 using VegetableShopApi.Enums;
 using VegetableShopApi.Exceptions;
 using VegetableShopApi.Models;
@@ -158,5 +159,17 @@ public class OrderService : IOrderService
         {
             productsById[orderedItem.ProductId].StockQuantity -= orderedItem.Quantity;
         }
+    }
+
+    public async Task<PagedResult<OrderDto>> GetAllAsync(int page, int pageSize)
+    {
+        var oreders = await _dbContext.Orders
+            .OrderByDescending(o => o.CreatedAt)
+            .Skip(pageSize * (page - 1))
+            .Take(pageSize)
+            .Include(o => o.User)
+            .ToListAsync();
+        return new PagedResult<OrderDto>(oreders.Select(o => new OrderDto(o))
+            .ToList(), page, pageSize, await _dbContext.Orders.CountAsync());
     }
 }

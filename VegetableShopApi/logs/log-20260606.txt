@@ -15,3 +15,64 @@ System.InvalidOperationException: Multiple constructors accepting all given argu
    at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
    at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
    at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddlewareImpl.Invoke(HttpContext context)
+2026-06-06 23:20:32 [WRN] Failed to determine the https port for redirect.
+2026-06-06 23:20:32 [ERR] An unhandled exception has occurred while executing the request.
+System.InvalidOperationException: Multiple constructors accepting all given argument types have been found in type 'VegetableShopApi.Controllers.OrderController'. There should only be one applicable constructor.
+   at Microsoft.Extensions.DependencyInjection.ActivatorUtilities.TryFindMatchingConstructor(Type instanceType, Type[] argumentTypes, ConstructorInfo& matchingConstructor, Nullable`1[]& parameterMap)
+   at Microsoft.Extensions.DependencyInjection.ActivatorUtilities.FindApplicableConstructor(Type instanceType, Type[] argumentTypes, ConstructorInfoEx[] constructors, ConstructorInfo& matchingConstructor, Nullable`1[]& matchingParameterMap)
+   at Microsoft.Extensions.DependencyInjection.ActivatorUtilities.CreateFactoryInternal(Type instanceType, Type[] argumentTypes, ParameterExpression& provider, ParameterExpression& argumentArray, Expression& factoryExpressionBody)
+   at Microsoft.Extensions.DependencyInjection.ActivatorUtilities.CreateFactory(Type instanceType, Type[] argumentTypes)
+   at Microsoft.AspNetCore.Mvc.Controllers.ControllerActivatorProvider.CreateActivator(ControllerActionDescriptor descriptor)
+   at Microsoft.AspNetCore.Mvc.Controllers.ControllerFactoryProvider.CreateControllerFactory(ControllerActionDescriptor descriptor)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvokerCache.GetCachedResult(ControllerContext controllerContext)
+   at Microsoft.AspNetCore.Mvc.Routing.ControllerRequestDelegateFactory.<>c__DisplayClass12_0.<CreateRequestDelegate>b__0(HttpContext context)
+   at Microsoft.AspNetCore.HttpsPolicy.HttpsRedirectionMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddlewareImpl.Invoke(HttpContext context)
+2026-06-06 23:22:09 [WRN] Failed to determine the https port for redirect.
+2026-06-06 23:22:09 [ERR] An unhandled exception has occurred while executing the request.
+System.InvalidOperationException: Multiple constructors accepting all given argument types have been found in type 'VegetableShopApi.Controllers.OrderController'. There should only be one applicable constructor.
+   at Microsoft.Extensions.DependencyInjection.ActivatorUtilities.TryFindMatchingConstructor(Type instanceType, Type[] argumentTypes, ConstructorInfo& matchingConstructor, Nullable`1[]& parameterMap)
+   at Microsoft.Extensions.DependencyInjection.ActivatorUtilities.FindApplicableConstructor(Type instanceType, Type[] argumentTypes, ConstructorInfoEx[] constructors, ConstructorInfo& matchingConstructor, Nullable`1[]& matchingParameterMap)
+   at Microsoft.Extensions.DependencyInjection.ActivatorUtilities.CreateFactoryInternal(Type instanceType, Type[] argumentTypes, ParameterExpression& provider, ParameterExpression& argumentArray, Expression& factoryExpressionBody)
+   at Microsoft.Extensions.DependencyInjection.ActivatorUtilities.CreateFactory(Type instanceType, Type[] argumentTypes)
+   at Microsoft.AspNetCore.Mvc.Controllers.ControllerActivatorProvider.CreateActivator(ControllerActionDescriptor descriptor)
+   at Microsoft.AspNetCore.Mvc.Controllers.ControllerFactoryProvider.CreateControllerFactory(ControllerActionDescriptor descriptor)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvokerCache.GetCachedResult(ControllerContext controllerContext)
+   at Microsoft.AspNetCore.Mvc.Routing.ControllerRequestDelegateFactory.<>c__DisplayClass12_0.<CreateRequestDelegate>b__0(HttpContext context)
+   at Microsoft.AspNetCore.HttpsPolicy.HttpsRedirectionMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddlewareImpl.Invoke(HttpContext context)
+2026-06-06 23:22:41 [ERR] An unhandled exception has occurred while executing the request.
+System.InvalidOperationException: Multiple constructors accepting all given argument types have been found in type 'VegetableShopApi.Controllers.CategoryController'. There should only be one applicable constructor.
+   at Microsoft.Extensions.DependencyInjection.ActivatorUtilities.TryFindMatchingConstructor(Type instanceType, Type[] argumentTypes, ConstructorInfo& matchingConstructor, Nullable`1[]& parameterMap)
+   at Microsoft.Extensions.DependencyInjection.ActivatorUtilities.FindApplicableConstructor(Type instanceType, Type[] argumentTypes, ConstructorInfoEx[] constructors, ConstructorInfo& matchingConstructor, Nullable`1[]& matchingParameterMap)
+   at Microsoft.Extensions.DependencyInjection.ActivatorUtilities.CreateFactoryInternal(Type instanceType, Type[] argumentTypes, ParameterExpression& provider, ParameterExpression& argumentArray, Expression& factoryExpressionBody)
+   at Microsoft.Extensions.DependencyInjection.ActivatorUtilities.CreateFactory(Type instanceType, Type[] argumentTypes)
+   at Microsoft.AspNetCore.Mvc.Controllers.ControllerActivatorProvider.CreateActivator(ControllerActionDescriptor descriptor)
+   at Microsoft.AspNetCore.Mvc.Controllers.ControllerFactoryProvider.CreateControllerFactory(ControllerActionDescriptor descriptor)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvokerCache.GetCachedResult(ControllerContext controllerContext)
+   at Microsoft.AspNetCore.Mvc.Routing.ControllerRequestDelegateFactory.<>c__DisplayClass12_0.<CreateRequestDelegate>b__0(HttpContext context)
+   at Microsoft.AspNetCore.HttpsPolicy.HttpsRedirectionMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddlewareImpl.Invoke(HttpContext context)
+2026-06-06 23:29:11 [WRN] Failed to determine the https port for redirect.
+2026-06-06 23:29:14 [ERR] Error getting orders
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at VegetableShopApi.DTOs.UserDto.UserDto..ctor(User user) in /Users/ivankahnybediuk/RiderProjects/vegetable_shop_api/VegetableShopApi/DTOs/UserDto/UserDto.cs:line 14
+   at VegetableShopApi.DTOs.OrderDto.OrderDto..ctor(Order order) in /Users/ivankahnybediuk/RiderProjects/vegetable_shop_api/VegetableShopApi/DTOs/OrderDto/OrderDto.cs:line 21
+   at VegetableShopApi.Services.OrderService.<>c.<GetAllAsync>b__10_1(Order o) in /Users/ivankahnybediuk/RiderProjects/vegetable_shop_api/VegetableShopApi/Services/OrderService.cs:line 171
+   at System.Linq.Enumerable.ListSelectIterator`2.Fill(ReadOnlySpan`1 source, Span`1 destination, Func`2 func)
+   at System.Linq.Enumerable.ListSelectIterator`2.ToList()
+   at VegetableShopApi.Services.OrderService.GetAllAsync(Int32 page, Int32 pageSize) in /Users/ivankahnybediuk/RiderProjects/vegetable_shop_api/VegetableShopApi/Services/OrderService.cs:line 171
+   at VegetableShopApi.Controllers.OrderController.GetOrders(Int32 page, Int32 pageSize) in /Users/ivankahnybediuk/RiderProjects/vegetable_shop_api/VegetableShopApi/Controllers/OrderController.cs:line 27
+2026-06-06 23:30:40 [WRN] Failed to determine the https port for redirect.

@@ -44,3 +44,8 @@ GET {{VegetableShopApi_HostAddress}}/api/products/search?name=lem
 Accept: application/json
 
 ###
+
+GET {{VegetableShopApi_HostAddress}}/api/orders
+Accept: application/json
+
+###

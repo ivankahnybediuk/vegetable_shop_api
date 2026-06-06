@@ -12,14 +12,25 @@ public class OrderController : ControllerBase
     private IOrderService _orderService;
     private ILogger<OrderController>? _logger;
 
-    public OrderController(IOrderService orderService)
-    {
-        _orderService = orderService;
-    }
     public OrderController(IOrderService orderService, ILogger<OrderController> logger)
     {
         _orderService = orderService;
         _logger = logger;
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> GetOrders([FromQuery] int page = 1, [FromQuery] int pageSize = 9)
+    {
+        try
+        {
+            if (page < 1 || pageSize < 1) return BadRequest("Page and PageSize must be greater than 0");
+            return Ok(await _orderService.GetAllAsync(page, pageSize));
+        }
+        catch (Exception ex)
+        {
+            _logger?.LogError(ex, "Error getting orders");
+            return StatusCode(500, ex.Message);
+        }
     }
     
     [HttpPost]

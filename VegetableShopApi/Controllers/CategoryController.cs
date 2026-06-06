@@ -9,11 +9,7 @@ public class CategoryController : ControllerBase
 {
     private ICategoryService _categoryService;
     private ILogger<CategoryController>? _logger;
-
-    public CategoryController(ICategoryService categoryService)
-    {
-        _categoryService = categoryService;
-    }
+    
     public CategoryController(ICategoryService categoryService, ILogger<CategoryController> logger)
     {
         _categoryService = categoryService;
