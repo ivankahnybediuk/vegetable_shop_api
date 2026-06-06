@@ -47,6 +47,7 @@ public class OrderService : IOrderService
 
         var productsById = products.ToDictionary(p => p.Id);
         ValidateOrderItemsExist(groupedItems, productsById);
+        ValidateQuantityToUnit(groupedItems, productsById);
         ValidateStockAvailability(groupedItems, productsById);
         List<OrderItem> orderItems = CreateOrderItems(groupedItems, productsById, order);
         UpdateStock(groupedItems, productsById);
@@ -57,6 +58,22 @@ public class OrderService : IOrderService
         await _dbContext.Orders.AddAsync(order);
         await _dbContext.SaveChangesAsync();
         return new OrderDto(order);
+    }
+
+    private void ValidateQuantityToUnit(List<OrderItemCreateDto> groupedItems, Dictionary<int, Product> productsById)
+    {
+        foreach (var orderedItem in groupedItems)
+        {
+            if (productsById[orderedItem.ProductId].Unit == UnitType.Pcs)
+            {
+                if (orderedItem.Quantity % 1 != 0)
+                {
+                    throw new ArgumentException(
+                        $"Quantity must be a whole number for product with id {orderedItem.ProductId} as it sells by pcs"
+                    );
+                }
+            }
+        }
     }
 
     private void ValidateOrder(OrderCreateDto orderDto)
