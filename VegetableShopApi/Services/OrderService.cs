@@ -172,4 +172,28 @@ public class OrderService : IOrderService
         return new PagedResult<OrderDto>(oreders.Select(o => new OrderDto(o))
             .ToList(), page, pageSize, await _dbContext.Orders.CountAsync());
     }
+
+    public async Task<OrderDto> UpdateOrderAsync(OrderUpdateDto orderDto, int id)
+    {
+        var status = ValidateOrderUpdateDto(orderDto);
+        var order = await _dbContext.Orders
+            .Include(o => o.User)
+            .FirstOrDefaultAsync( o=> o.Id == id) 
+                    ?? throw new KeyNotFoundException($"Order with id {id} does not exist.");
+        order.Status = status;
+        await _dbContext.SaveChangesAsync();
+        return new OrderDto(order);
+    }
+
+    private OrderStatus ValidateOrderUpdateDto(OrderUpdateDto orderDto)
+    {
+        if (string.IsNullOrWhiteSpace(orderDto.Status.ToString())) throw new ArgumentException("Status is required.");
+
+        if (!Enum.TryParse(orderDto.Status.ToString(), true, out OrderStatus status))
+        {
+            throw new ArgumentException("Invalid status.");
+        }
+
+        return status;
+    }
 }

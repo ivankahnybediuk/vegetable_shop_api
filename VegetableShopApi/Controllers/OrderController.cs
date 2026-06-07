@@ -59,5 +59,26 @@ public class OrderController : ControllerBase
             return StatusCode(500, ex.Message);
         }
     }
+
+    [HttpPatch]
+    [Route("{id:int}")]
+    public async Task<IActionResult> UpdateOrder([FromBody] OrderUpdateDto orderDto, [FromRoute] int id)
+    {
+        try
+        {
+            if (orderDto == null) return BadRequest("Order is required");
+            if (id <= 0) return BadRequest("Id must be greater than 0");
+            return Ok(await _orderService.UpdateOrderAsync(orderDto, id));
+        }
+        catch (KeyNotFoundException ex)
+        {
+            return NotFound(ex.Message);
+        }
+        catch (Exception ex)
+        {
+            _logger?.LogError(ex, "Error updating order");
+            return StatusCode(500, ex.Message);
+        }
+    }
     
 }

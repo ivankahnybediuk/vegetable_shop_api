@@ -49,3 +49,10 @@ GET {{VegetableShopApi_HostAddress}}/api/orders
 Accept: application/json
 
 ###
+
+PATCH {{VegetableShopApi_HostAddress}}/api/orders/2
+Content-Type: application/json
+
+{
+  "Status": "confirmed"
+}
