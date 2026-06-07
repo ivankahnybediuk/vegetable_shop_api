@@ -196,4 +196,15 @@ public class OrderService : IOrderService
 
         return status;
     }
+
+    public async Task<OrderDetailsDto> GetByIdAsync(int id)
+    {
+        var order = await _dbContext.Orders
+                        .Include(o => o.User)
+                        .Include(o => o.Items)
+                        .ThenInclude(i => i.Product)
+                        .FirstOrDefaultAsync(o => o.Id == id)
+                    ?? throw new KeyNotFoundException($"Order with id {id} does not exist.");
+        return new OrderDetailsDto(order);
+    }
 }

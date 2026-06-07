@@ -19,7 +19,7 @@ public class CategoryControllerTest
         var mockCategoryService = new Mock<ICategoryService>();
         mockCategoryService.Setup(s => s.GetAllAsync()).ReturnsAsync(categories);
 
-        var controller = new CategoryController(mockCategoryService.Object);
+        var controller = new CategoryController(mockCategoryService.Object, null);
         var actionResult = await controller.GetAllCategories();
         ;
         var okObjectResult = Assert.IsType<OkObjectResult>(actionResult);
@@ -33,7 +33,7 @@ public class CategoryControllerTest
         var mockCategoryService = new Mock<ICategoryService>();
         mockCategoryService.Setup(s => s.GetAllAsync()).ReturnsAsync(new List<CategoryDto>());
 
-        var controller = new CategoryController(mockCategoryService.Object);
+        var controller = new CategoryController(mockCategoryService.Object, null);
         var actionResult = await controller.GetAllCategories();
         ;
         var okObjectResult = Assert.IsType<OkObjectResult>(actionResult);

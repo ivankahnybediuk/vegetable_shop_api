@@ -80,5 +80,25 @@ public class OrderController : ControllerBase
             return StatusCode(500, ex.Message);
         }
     }
+
+    [HttpGet]
+    [Route("{id:int}")]
+    public async Task<IActionResult> GetById([FromRoute] int id)
+    {
+        try
+        {
+            if (id <= 0) return BadRequest("Id must be greater than 0");
+            return Ok(await _orderService.GetByIdAsync(id));
+        }
+        catch (KeyNotFoundException ex)
+        {
+            return NotFound(ex.Message);
+        }
+        catch (Exception ex)
+        {
+            _logger?.LogError(ex, "Error getting order by id");
+            return StatusCode(500, ex.Message);
+        }
+    }
     
 }

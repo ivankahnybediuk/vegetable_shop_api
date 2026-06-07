@@ -1,2 +1,22 @@
 2026-06-07 15:27:20 [WRN] Failed to determine the https port for redirect.
 2026-06-07 15:41:29 [WRN] Failed to determine the https port for redirect.
+2026-06-07 21:23:34 [WRN] Failed to determine the https port for redirect.
+2026-06-07 21:29:32 [WRN] Failed to determine the https port for redirect.
+2026-06-07 21:29:36 [ERR] Error getting order by id
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at VegetableShopApi.DTOs.UserDto.UserDto..ctor(User user) in /Users/ivankahnybediuk/RiderProjects/vegetable_shop_api/VegetableShopApi/DTOs/UserDto/UserDto.cs:line 14
+   at VegetableShopApi.DTOs.OrderDto.OrderDto..ctor(Order order) in /Users/ivankahnybediuk/RiderProjects/vegetable_shop_api/VegetableShopApi/DTOs/OrderDto/OrderDto.cs:line 22
+   at VegetableShopApi.DTOs.OrderDto.OrderDetailsDto..ctor(Order order) in /Users/ivankahnybediuk/RiderProjects/vegetable_shop_api/VegetableShopApi/DTOs/OrderDto/OrderDetailsDto.cs:line 13
+   at VegetableShopApi.Services.OrderService.GetByIdAsync(Int32 id) in /Users/ivankahnybediuk/RiderProjects/vegetable_shop_api/VegetableShopApi/Services/OrderService.cs:line 205
+   at VegetableShopApi.Controllers.OrderController.GetById(Int32 id) in /Users/ivankahnybediuk/RiderProjects/vegetable_shop_api/VegetableShopApi/Controllers/OrderController.cs:line 91
+2026-06-07 21:30:58 [WRN] Failed to determine the https port for redirect.
+2026-06-07 21:31:01 [ERR] Error getting order by id
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at VegetableShopApi.DTOs.OrderItemDto.OrderItemDto..ctor(OrderItem orderItem) in /Users/ivankahnybediuk/RiderProjects/vegetable_shop_api/VegetableShopApi/DTOs/OrderItemDto/OrderItemDto.cs:line 17
+   at VegetableShopApi.DTOs.OrderDto.OrderDetailsDto.<>c.<.ctor>b__5_0(OrderItem oi) in /Users/ivankahnybediuk/RiderProjects/vegetable_shop_api/VegetableShopApi/DTOs/OrderDto/OrderDetailsDto.cs:line 15
+   at System.Linq.Enumerable.ListSelectIterator`2.Fill(ReadOnlySpan`1 source, Span`1 destination, Func`2 func)
+   at System.Linq.Enumerable.ListSelectIterator`2.ToList()
+   at VegetableShopApi.DTOs.OrderDto.OrderDetailsDto..ctor(Order order) in /Users/ivankahnybediuk/RiderProjects/vegetable_shop_api/VegetableShopApi/DTOs/OrderDto/OrderDetailsDto.cs:line 15
+   at VegetableShopApi.Services.OrderService.GetByIdAsync(Int32 id) in /Users/ivankahnybediuk/RiderProjects/vegetable_shop_api/VegetableShopApi/Services/OrderService.cs:line 206
+   at VegetableShopApi.Controllers.OrderController.GetById(Int32 id) in /Users/ivankahnybediuk/RiderProjects/vegetable_shop_api/VegetableShopApi/Controllers/OrderController.cs:line 91
+2026-06-07 21:34:11 [WRN] Failed to determine the https port for redirect.

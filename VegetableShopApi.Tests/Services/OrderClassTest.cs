@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using VegetableShopApi.DTOs.OrderDto;
 using VegetableShopApi.DTOs.OrderItemDto;
+using VegetableShopApi.Enums;
 using VegetableShopApi.Exceptions;
 using VegetableShopApi.Models;
 using VegetableShopApi.Services;
@@ -10,6 +11,70 @@ namespace VegetableShopApi.Tests.Services;
 
 public class OrderClassTest
 {
+
+    private static List<Order> CreateOrders()
+    {
+        return new List<Order>()
+        {
+            new Order()
+            {
+                Id = 1,
+                CreatedAt = DateTime.Parse("2026-01-10"),
+                DeliveryAddress = "Bandery st. 3",
+                User = new User()
+                {
+                    Id = 1,
+                    FirstName = "Test",
+                    LastName = "Test",
+                    Email = "<EMAIL>",
+                    Phone = "123456789"
+                },
+                Status = OrderStatus.Pending,
+                TotalPrice = 12.22m
+            },
+            new Order()
+            {
+                Id = 2,
+                CreatedAt = DateTime.Parse("2026-01-01"),
+                DeliveryAddress = "Shevchenka st. 25",
+                User = new User()
+                {
+                    Id = 2,
+                    FirstName = "Test",
+                    LastName = "Test",
+                    Email = "<EMAIL>",
+                    Phone = "123456789"
+                },
+                Status = OrderStatus.Delivered,
+                TotalPrice = 45.12m
+            }
+        };
+    }
+    
+    private static OrderItem CreateOrderItem(Order order, Product product, int id = 1)
+    {
+        return new OrderItem()
+        {
+            Id = id,
+            ProductId = 1,
+            Quantity = 2.0m,
+            Order = order,
+            Product = product
+        };
+    }
+
+    private static Product CreateProduct()
+    {
+        return new Product()
+        {
+            Id = 1,
+            Name = "Test",
+            Price = 2.0m,
+            StockQuantity = 10.0m
+        };
+    }
+    
+    
     [Fact]
     public async Task CreateOrderAsync_ThrowsArgumentException_WhenEmptyItems()
     {
@@ -246,9 +311,152 @@ public class OrderClassTest
         Assert.Equal(4.0m, createdOrder.Total);
     }
     
+    [Fact]
+    public async Task CreateOrderAsync_ThrowsArgumentException_WhenIsNotAWholeNumberQuantityForPcs()
+    {
+        using var context = TestDbContextFactory.Create();
+        var service = new OrderService(context);
+       
+        context.Products.Add(new Product() { Id = 1, Name = "Test", StockQuantity = 10.0m, Price = 2.0m, Unit = UnitType.Pcs });
+        await context.SaveChangesAsync();
+        
+        OrderCreateDto orderDto = new OrderCreateDto()
+        {
+            Items = new List<OrderItemCreateDto>()
+            {
+                new OrderItemCreateDto() { ProductId = 1, Quantity = 2.5m }
+            },
+            CustomerName = "TestName",
+            CustomerLastname = "TestLastName",
+            CustomerEmail = " testSecond@email.com ",
+            CustomerPhone = "123456789",
+            DeliveryAddress = "Test Address"
+        };
+
+        await Assert.ThrowsAsync<ArgumentException>(() => service.CreateOrderAsync(orderDto));
+    }
+
+    [Fact]
+    public async Task GetAllAsync_ReturnsAllOrders()
+    {
+        var orders = CreateOrders();
+        using var context = TestDbContextFactory.Create();
+        context.Orders.AddRange(orders);
+        await context.SaveChangesAsync();
+        
+        var service = new OrderService(context);
+        var result = await service.GetAllAsync(1, 10);
+        
+        Assert.Equal(2, result.TotalCount);
+        Assert.Equal(1, result.TotalPages);
+        Assert.Equal(1, result.Items[0].Id);
+    }
+    [Fact]
+    public async Task GetAllAsync_ReturnsEmptyListIfNoOrders()
+    {
+        var orders = CreateOrders();
+        using var context = TestDbContextFactory.Create();
+        
+        var service = new OrderService(context);
+        var result = await service.GetAllAsync(1, 10);
+        
+        Assert.Equal(0, result.TotalCount);
+        Assert.Equal(0, result.TotalPages);
+        Assert.Empty(result.Items);
+    }
+
+    [Fact]
+    public async Task UpdateOrderAsync_ReturnsOrderDtoStoreToDb_WhenOrderIsUpdated()
+    {
+        var orders = CreateOrders();
+        using var context = TestDbContextFactory.Create();
+        context.Orders.AddRange(orders);
+        await context.SaveChangesAsync();
+
+        var orderUpdateDto = new OrderUpdateDto()
+        {
+            Status = "completed",
+        };
+        var orderId = 1;
+        var service = new OrderService(context);
+
+        var result = await service.UpdateOrderAsync(orderUpdateDto, orderId);
+        await context.SaveChangesAsync();
+        var order = await context.Orders.FirstOrDefaultAsync(o => o.Id == orderId);
+
+        Assert.NotNull(order);
+        Assert.Equal(OrderStatus.Completed, order.Status);
+        Assert.Equal(result.Id, order.Id);
+        Assert.Equal(orderId, result.Id);
+    }
     
+    [Fact]
+    public async Task UpdateOrderAsync_ThrowsArgumentException_WhenStatusIsInvalid()
+    {
+        var orders = CreateOrders();
+        using var context = TestDbContextFactory.Create();
+        context.Orders.AddRange(orders);
+        await context.SaveChangesAsync();
+
+        var orderUpdateDto = new OrderUpdateDto()
+        {
+            Status = "complete",
+        };
+        var orderId = 1;
+        var service = new OrderService(context);
+
+        await Assert.ThrowsAsync<ArgumentException>(() => service.UpdateOrderAsync(orderUpdateDto, orderId));
+    }
     
+    [Fact]
+    public async Task UpdateOrderAsync_ThrowsKeyNotFoundException_WhenOrderDoesntExists()
+    {
+        var orders = CreateOrders();
+        using var context = TestDbContextFactory.Create();
+        context.Orders.AddRange(orders);
+        await context.SaveChangesAsync();
+
+        var orderUpdateDto = new OrderUpdateDto()
+        {
+            Status = "completed",
+        };
+        
+        var orderId = 3;
+        var service = new OrderService(context);
+
+        await Assert.ThrowsAsync<KeyNotFoundException>(() => service.UpdateOrderAsync(orderUpdateDto, orderId));
+    }
+
+    [Fact]
+    public async Task GetByIdAsync_ReturnsOrderDetailesDto()
+    {
+        var orders = CreateOrders();
+        var product = CreateProduct();
+        orders.ForEach((o) => o.Items = new List<OrderItem>() { CreateOrderItem(o, product, o.Id) });
+        await using var context = TestDbContextFactory.Create();
+        context.Orders.AddRange(orders);
+        await context.SaveChangesAsync();
+        
+        var service = new OrderService(context);
+        var result = await service.GetByIdAsync(1);
+        
+        Assert.NotNull(result);
+        Assert.Equal(1, result.Id);
+        Assert.NotNull(result.Items);
+        Assert.NotEmpty(result.Items);
+        Assert.Single(result.Items);
+        Assert.IsType<OrderDetailsDto>(result);
+    }
     
-    
-    
+    [Fact]
+    public async Task GetByIdAsync_ThrowsKeyNotFoundException_WhenOrderDoesntExists()
+    {
+        var orders = CreateOrders();
+        await using var context = TestDbContextFactory.Create();
+        context.Orders.AddRange(orders);
+        await context.SaveChangesAsync();
+        
+        var service = new OrderService(context);
+        await Assert.ThrowsAsync<KeyNotFoundException>(() => service.GetByIdAsync(3));
+    }
 }

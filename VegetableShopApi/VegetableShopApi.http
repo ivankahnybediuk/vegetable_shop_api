@@ -56,3 +56,11 @@ Content-Type: application/json
 {
   "Status": "confirmed"
 }
+
+###
+
+
+GET {{VegetableShopApi_HostAddress}}/api/orders/2
+Accept: application/json
+
+###
