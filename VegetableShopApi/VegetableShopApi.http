@@ -1,4 +1,6 @@
 
+@VegetableShopApi_HostAddress = http://localhost:5006
+
 POST {{VegetableShopApi_HostAddress}}/api/orders
 Content-Type: application/json
 
@@ -11,26 +13,23 @@ Content-Type: application/json
   "items": [
     {
       "productId": 2,
-      "quantity": 1.0
+      "quantity": 100
     },
     {
-      "productId": 3,
+      "productId": 2,
       "quantity": 2.0
     }
   ]
 }
 
-
-
 ###
-@VegetableShopApi_HostAddress = http://localhost:5006
 
 GET {{VegetableShopApi_HostAddress}}/api/products?page=2&pageSize=3
 Accept: application/json
 
 ###
 
-GET {{VegetableShopApi_HostAddress}}/api/products/category/2?page=1&pageSize=3
+GET {{VegetableShopApi_HostAddress}}/api/products/category/7?page=1
 Accept: application/json
 
 ###
@@ -60,7 +59,7 @@ Content-Type: application/json
 ###
 
 
-GET {{VegetableShopApi_HostAddress}}/api/orders/2
+GET {{VegetableShopApi_HostAddress}}/api/orders/14
 Accept: application/json
 
 ###

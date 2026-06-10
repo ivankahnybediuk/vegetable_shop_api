@@ -32,10 +32,21 @@ builder.Services.AddDbContext<AppDbContext>( options =>
             o.MapEnum<OrderStatus>("order_status");
             o.MapEnum<UserRole>("role");
         }));
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("Angular",
+        policy =>
+        {
+            policy.WithOrigins("http://localhost:4200")
+                .AllowAnyHeader()
+                .AllowAnyMethod();
+        });
+});
 builder.Services.AddControllers();
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<IOrderService, OrderService>();
+
 
 
 var app = builder.Build();
@@ -43,6 +54,7 @@ var app = builder.Build();
 app.UseSwagger();
 app.UseSwaggerUI();
 app.MapControllers();
+app.UseCors("Angular");
 
 app.UseHttpsRedirection();
 
