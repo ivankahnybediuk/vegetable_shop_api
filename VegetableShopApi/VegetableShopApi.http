@@ -1,0 +1,66 @@
+
+POST {{VegetableShopApi_HostAddress}}/api/orders
+Content-Type: application/json
+
+{
+  "name": "John",
+  "lastname": "Doe",
+  "email": "email",
+  "phone": "123456789",
+  "address": "123 Main St",
+  "items": [
+    {
+      "productId": 2,
+      "quantity": 1.0
+    },
+    {
+      "productId": 3,
+      "quantity": 2.0
+    }
+  ]
+}
+
+
+
+###
+@VegetableShopApi_HostAddress = http://localhost:5006
+
+GET {{VegetableShopApi_HostAddress}}/api/products?page=2&pageSize=3
+Accept: application/json
+
+###
+
+GET {{VegetableShopApi_HostAddress}}/api/products/category/2?page=1&pageSize=3
+Accept: application/json
+
+###
+
+GET {{VegetableShopApi_HostAddress}}/api/categories
+Accept: application/json
+
+###
+
+GET {{VegetableShopApi_HostAddress}}/api/products/search?name=lem
+Accept: application/json
+
+###
+
+GET {{VegetableShopApi_HostAddress}}/api/orders
+Accept: application/json
+
+###
+
+PATCH {{VegetableShopApi_HostAddress}}/api/orders/2
+Content-Type: application/json
+
+{
+  "Status": "confirmed"
+}
+
+###
+
+
+GET {{VegetableShopApi_HostAddress}}/api/orders/2
+Accept: application/json
+
+###
