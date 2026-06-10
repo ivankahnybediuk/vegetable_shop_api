@@ -9,11 +9,7 @@ public class ProductsController : ControllerBase
 {
     private IProductService _productService;
     private ILogger<ProductsController>? _logger;
-
-    public ProductsController(IProductService productService)
-    {
-        _productService = productService;
-    }
+    
     public ProductsController(IProductService productService, ILogger<ProductsController> logger)
     {
         _productService = productService;
@@ -23,7 +19,7 @@ public class ProductsController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> GetProducts(
         [FromQuery] int page = 1, 
-        [FromQuery] int pageSize = 9)
+        [FromQuery] int pageSize = 12)
     {
         try
         {
